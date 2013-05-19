@@ -1,0 +1,148 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: 'Open Sans';
+    font-size: 10pt;
+    background-image: url('../img/back.jpg');
+    background-repeat: repeat;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    font-style: normal;
+    font-weight: 300;
+    src: url('fonts/OpenSans-Light.woff') format('woff');
+}
+
+#daemon-overview {
+    padding: 9px;
+}
+
+#daemon-overview div {
+    height: 36px;
+    margin-bottom: 9px;
+    border-radius: 18px;
+}
+
+#daemon-overview div div {
+    display: inline-block;
+    line-height: 36px;
+}
+
+#daemon-overview div .daemon-name {
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+#daemon-overview div .daemon-status {
+    margin-left: 15px;
+}
+
+#daemon-overview div .daemon-actions {
+    float: right;
+    margin-right: 10px;
+}
+
+#daemon-overview .supervise_not_running {
+    background-color: rgba(196, 60, 53, 0.50);
+}
+
+#daemon-overview .daemon_not_running {
+    background-color: rgba(196, 60, 53, 0.85);
+}
+
+#daemon-overview .daemon_starting {
+    background-color: rgba(248, 148, 6, 0.75);
+}
+
+#daemon-overview .daemon_running {
+    background-color: rgba(0, 188, 0, 0.85);
+}
+
+
+.btn-start {
+
+    -moz-box-shadow:inset 0px 1px 0px 0px #9acc85;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #9acc85;
+    box-shadow:inset 0px 1px 0px 0px #9acc85;
+
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #74ad5a), color-stop(1, #68a54b));
+    background:-moz-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
+    background:-webkit-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
+    background:-o-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
+    background:-ms-linear-gradient(top, #74ad5a 5%, #68a54b 100%);
+    background:linear-gradient(to bottom, #74ad5a 5%, #68a54b 100%);
+
+    background-color:#74ad5a;
+
+    -moz-border-radius:26px;
+    -webkit-border-radius:26px;
+    border-radius:26px;
+
+    border:1px solid #3b6e22;
+
+    display:inline-block;
+    color:#ffffff;
+    font-size:13px;
+    font-weight:bold;
+    padding:3px 20px;
+    text-decoration:none;
+
+}
+.btn-start:hover {
+
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #68a54b), color-stop(1, #74ad5a));
+    background:-moz-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
+    background:-webkit-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
+    background:-o-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
+    background:-ms-linear-gradient(top, #68a54b 5%, #74ad5a 100%);
+    background:linear-gradient(to bottom, #68a54b 5%, #74ad5a 100%);
+
+    background-color:#68a54b;
+}
+
+.btn-start:active, .btn-stop:active {
+    position:relative;
+    top:1px;
+}
+
+.btn-stop {
+
+    -moz-box-shadow:inset 0px 1px 0px 0px #cc736c;
+    -webkit-box-shadow:inset 0px 1px 0px 0px #CC736C;
+    box-shadow:inset 0px 1px 0px 0px #CC736C;
+
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #AD4738), color-stop(1, #A53029));
+    background:-moz-linear-gradient(top, #AD4738 5%, #A53029 100%);
+    background:-webkit-linear-gradient(top, #AD4738 5%, #A53029 100%);
+    background:-o-linear-gradient(top, #AD4738 5%, #A53029 100%);
+    background:-ms-linear-gradient(top, #AD4738 5%, #A53029 100%);
+    background:linear-gradient(to bottom, #AD4738 5%, #A53029 100%);
+
+    background-color:#AD4738;
+
+    -moz-border-radius:26px;
+    -webkit-border-radius:26px;
+    border-radius:26px;
+
+    border:1px solid #6e1c18;
+
+    display:inline-block;
+    color:#ffffff;
+    font-size:13px;
+    font-weight:bold;
+    padding:3px 20px;
+    text-decoration:none;
+
+}
+.btn-stop:hover {
+
+    background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #A53029), color-stop(1, #AD4738));
+    background:-moz-linear-gradient(top, #A53029 5%, #AD4738 100%);
+    background:-webkit-linear-gradient(top, #A53029 5%, #AD4738 100%);
+    background:-o-linear-gradient(top, #A53029 5%, #AD4738 100%);
+    background:-ms-linear-gradient(top, #A53029 5%, #AD4738 100%);
+    background:linear-gradient(to bottom, #A53029 5%, #AD4738 100%);
+
+    background-color:#A53029;
+}

@@ -4,9 +4,8 @@ import signal
 import shutil
 import textwrap
 import time
-import datetime
 from subprocess import Popen, PIPE
-from supervise_web.io import svstat, svcontrol
+from supervise_web.io import svstat
 
 
 class BaseTestCase(TestCase):

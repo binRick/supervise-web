@@ -17,13 +17,21 @@ def svstat(daemon_dir):
         * daemon_autostart: False iff there exists a file 'down' in the supervise folder which prevents supervise from
                             starting the daemon
 
-    :param daemon_dir: An abolute filesystem path to a directory containing the daemon script to be run by supervise.
+    :param daemon_dir: An absolute filesystem path to a directory containing the daemon script to be run by supervise.
     :rtype: `dict`
     """
-    status = {}
+    status = {'alive': False}
     if not os.path.isfile(os.path.join(daemon_dir, 'run')) or not os.path.isdir(os.path.join(daemon_dir, 'supervise')):
-        status['alive'] = False
         return status
+    try:
+        fd = os.open(os.path.join(daemon_dir, 'supervise', 'ok'), os.O_NONBLOCK | os.O_WRONLY)
+    except OSError, e:
+        if e.errno != 6:  # No such device or address
+            raise
+        return status
+    else:
+        os.close(fd)
+        status['alive'] = True
 
     status_file = os.path.join(daemon_dir, 'supervise', 'status')
     with open(status_file, 'r') as f:
@@ -49,15 +57,6 @@ def svstat(daemon_dir):
     status['daemon_up'] = unpacked[2] != 'd'  # else 'u' or 0x00
 
     status['daemon_autostart'] = not os.path.isfile(os.path.join(daemon_dir, 'supervise', 'down'))
-    status['alive'] = True
-    try:
-        fd = os.open(os.path.join(daemon_dir, 'supervise', 'ok'), os.O_NONBLOCK | os.O_WRONLY)
-    except OSError, e:
-        if e.errno != 6:  # No such device or address
-            raise
-        status['alive'] = False
-    else:
-        os.close(fd)
     return status
 
 
