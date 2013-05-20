@@ -34,7 +34,7 @@ def svstat(daemon_dir):
         status['alive'] = True
 
     status_file = os.path.join(daemon_dir, 'supervise', 'status')
-    with open(status_file, 'r') as f:
+    with open(status_file, 'rb') as f:
         status_code = f.read()
 
     # unpack the supervise status file
@@ -44,9 +44,8 @@ def svstat(daemon_dir):
     # 1 byte paused flag (boolean)
     # 1 byte want character - can be either 'u' for up, 'd' for down or 0x00 for once (supervise won't restart the
     #                         daemon when the daemon dies)
-    status_code = '\0' + status_code[1:]
     unpacked = struct.unpack_from('>QI', status_code)
-    timestamp = datetime.datetime.fromtimestamp(unpacked[0])
+    timestamp = datetime.datetime.fromtimestamp(unpacked[0] - 4611686018427387914)  # subtract as in tai.h file
     timestamp = timestamp.replace(microsecond=unpacked[1] / 1000)
     status['daemon_timestamp'] = timestamp
 

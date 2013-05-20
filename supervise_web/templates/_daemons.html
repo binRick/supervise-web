@@ -1,0 +1,7 @@
+{% for name in daemons|sort %}
+<div class="{{ helpers.daemon_row_css_class(daemons[name]) }}" data-daemon-id="{{ name }}">
+    <div class="daemon-name">{{ name }}</div>
+    <div class="daemon-status">{{ helpers.daemon_status(daemons[name]) }}</div>
+    <div class="daemon-actions">{{ helpers.daemon_action_buttons(daemons[name])|safe }}</div>
+</div>
+{% endfor %}

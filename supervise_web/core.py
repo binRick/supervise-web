@@ -1,5 +1,5 @@
 import os
-from supervise_web.io import svstat
+from supervise_web.io import svstat, svcontrol
 
 SERVICE_DIR = '/etc/service'
 
@@ -12,3 +12,11 @@ def daemon_info():
             continue
         info[dir_name] = svstat(dir_path)
     return info
+
+
+def start_daemon(dir_name):
+    return svcontrol(os.path.join(SERVICE_DIR, dir_name), 'u')
+
+
+def stop_daemon(dir_name):
+    return svcontrol(os.path.join(SERVICE_DIR, dir_name), 'd')

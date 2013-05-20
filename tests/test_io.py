@@ -15,8 +15,7 @@ class IoTestCase(BaseTestCase):
         self.assertFalse(x['daemon_once'])
         self.assertTrue(x['daemon_up'])
 
-        #  not sure where the relatively large timedelta comes from
-        self.assertAlmostEquals(datetime.datetime.now(), x['daemon_timestamp'], delta=datetime.timedelta(seconds=10))
+        self.assertAlmostEquals(datetime.datetime.now(), x['daemon_timestamp'], delta=datetime.timedelta(seconds=1))
         self.assertTrue(0 < x['daemon_pid'] < 65536)
 
     def test_with_down_file(self):
@@ -55,3 +54,9 @@ class IoTestCase(BaseTestCase):
         self.assertGreater(ts3, ts2)
         self.assertFalse(svstat(p)['daemon_once'])
         self.assertFalse(svstat(p)['daemon_up'])
+
+    def test_many_daemons(self):
+        for i in range(15):
+            self._create_test_daemon(i)
+        for i in range(15):
+            self.assertTrue(svstat(self._daemon_dir(i))['alive'])

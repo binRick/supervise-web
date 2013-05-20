@@ -22,6 +22,7 @@ body {
     height: 36px;
     margin-bottom: 9px;
     border-radius: 18px;
+    cursor: pointer;
 }
 
 #daemon-overview div div {

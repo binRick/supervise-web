@@ -3,17 +3,12 @@
 <head>
     <title>Supervise-Web</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <link href="{{ url_for('static', filename='css/supervise-web.css') }}" rel="stylesheet">
+    <script src="{{ url_for('static', filename='js/jquery-1.9.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/supervise-web.js') }}"></script>
 </head>
 <body>
-<div id="daemon-overview">
-    {% for name in daemons|sort %}
-    <div class="{{ helpers.daemon_row_css_class(daemons[name]) }}">
-        <div class="daemon-name">{{ name }}</div>
-        <div class="daemon-status">{{ helpers.daemon_status(daemons[name]) }}</div>
-        <div class="daemon-actions">{{ helpers.daemon_action_buttons(daemons[name])|safe }}</div>
-    </div>
-    {% endfor %}
-</div>
+<div id="daemon-overview"></div>
 </body>
 </html>
