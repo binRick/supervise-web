@@ -18,7 +18,7 @@ def daemon_row_css_class(daemon_data):
 
 def daemon_action_buttons(daemon_data):
     if not daemon_data['alive']:
-        return ''
+        return '<button class="btn-start-supervise">Start Supervise</button>'
     if daemon_data['daemon_up']:
         return '<button class="btn-stop">Stop</button>'
     else:

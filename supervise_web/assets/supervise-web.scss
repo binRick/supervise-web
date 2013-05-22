@@ -1,0 +1,109 @@
+body {
+  padding: 0;
+  margin: 0;
+  font-family: 'Open Sans';
+  font-size: 10pt;
+  background-image: url('../img/back.jpg');
+  background-repeat: repeat;
+}
+
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 300;
+  src: url('fonts/OpenSans-Light.woff');
+}
+
+#daemon-overview {
+  padding: 9px;
+
+  div {
+    height: 36px;
+    margin-bottom: 9px;
+    border-radius: 18px;
+    cursor: pointer;
+
+    div {
+      display: inline-block;
+      line-height: 36px;
+    }
+
+    .daemon-name {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+
+    .daemon-status {
+      margin-left: 15px;
+    }
+
+    .daemon-actions {
+      float: right;
+      margin-right: 10px;
+    }
+  }
+
+  .supervise_not_running {
+    background-color: rgba(196, 60, 53, 0.50);
+  }
+
+  .daemon_not_running {
+    background-color: rgba(196, 60, 53, 0.85);
+  }
+
+  .daemon_starting {
+    background-color: rgba(248, 148, 6, 0.75);
+  }
+
+  .daemon_running {
+    background-color: rgba(0, 188, 0, 0.85);
+  }
+}
+
+@mixin button-scaffold($color1, $color2, $color3, $color4) {
+  -moz-box-shadow:inset 0px 1px 0px 0px $color3;
+  -webkit-box-shadow:inset 0px 1px 0px 0px $color3;
+  box-shadow:inset 0px 1px 0px 0px $color3;
+  background:-moz-linear-gradient(top, $color1 5%, $color2 100%);
+  background:-webkit-linear-gradient(top, $color1 5%, $color2 100%);
+  background:-o-linear-gradient(top, $color1 5%, $color2 100%);
+  background:-ms-linear-gradient(top, $color1 5%, $color2 100%);
+  background:linear-gradient(to bottom, $color1 5%, $color2 100%);
+  background-color:$color1;
+  -moz-border-radius:26px;
+  -webkit-border-radius:26px;
+  border-radius:26px;
+  border:1px solid $color4;
+  display:inline-block;
+  color:#ffffff;
+  font-size:13px;
+  font-weight:bold;
+  padding:3px 20px;
+  text-decoration:none;
+
+  &:hover {
+    background:-moz-linear-gradient(top, $color2 5%, $color1 100%);
+    background:-webkit-linear-gradient(top, $color2 5%, $color1 100%);
+    background:-o-linear-gradient(top, $color2 5%, $color1 100%);
+    background:-ms-linear-gradient(top, $color2 5%, $color1 100%);
+    background:linear-gradient(to bottom, $color2 5%, $color1 100%);
+    background-color:$color2;
+  }
+
+  &:active {
+    position:relative;
+    top:1px;
+  }
+}
+
+.btn-stop {
+  @include button-scaffold(#AD4738, #A53029, #cc736c, #6e1c18);
+}
+
+.btn-start {
+  @include button-scaffold(#74ad5a, #68a54b, #9acc85, #3b6e22);
+}
+
+.btn-start-supervise {
+  @include button-scaffold(#5785ad, #4e749b, #76a5ce, #334f67);
+}

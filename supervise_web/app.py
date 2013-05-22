@@ -1,7 +1,7 @@
-from supervise_web import core, helpers
+from supervise_web import core
 from flask import Flask, render_template, abort
+
 app = Flask(__name__)
-app.jinja_env.globals['helpers'] = helpers
 
 
 @app.route('/')
