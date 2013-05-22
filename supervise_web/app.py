@@ -1,5 +1,5 @@
 from supervise_web import core
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, Response
 
 app = Flask(__name__)
 
@@ -17,8 +17,14 @@ def _daemons():
 @app.route('/daemon/<daemon_id>/<action>', methods=['POST'])
 def daemon_action(daemon_id, action):
     if action == 'start':
-        return 'ok' if core.start_daemon(daemon_id) else ''
+        return Response(status=204) if core.start_daemon(daemon_id) else Response(status=500)
     elif action == 'stop':
-        return 'ok' if core.stop_daemon(daemon_id) else ''
+        return Response(status=204) if core.stop_daemon(daemon_id) else Response(status=500)
+    elif action == 'start_supervise':
+        core.start_supervise(daemon_id)
+        return Response(status=204)
+    elif action == 'stop_supervise':
+        core.stop_supervise(daemon_id)
+        return Response(status=204)
     else:
         abort(400)

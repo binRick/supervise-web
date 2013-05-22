@@ -22,17 +22,17 @@ def daemon_action_buttons(daemon_data):
     if daemon_data['daemon_up']:
         return '<button class="btn-stop">Stop</button>'
     else:
-        return '<button class="btn-start">Start</button>'
+        return '<button class="btn-start">Start</button> <button class="btn-stop-supervise">Stop supervise</button>'
 
 
 def daemon_status(daemon_data):
     if not daemon_data['alive']:
         return 'not supervised'
-    if not daemon_data['daemon_up']:
-        return 'not running'
     now = datetime.datetime.now()
     ts = daemon_data['daemon_timestamp']
     delta = now - ts if now >= ts else datetime.timedelta()
+    if not daemon_data['daemon_up']:
+        return 'not running, daemon stopped %s ago' % timedelta_to_str(delta)
     if delta < datetime.timedelta(seconds=15):
         return 'just started, running for %s' % timedelta_to_str(delta)
     return 'running for %s' % timedelta_to_str(delta)

@@ -2,6 +2,7 @@ import os
 import stat
 import struct
 import datetime
+import subprocess
 
 
 def svstat(daemon_dir):
@@ -80,3 +81,10 @@ def svcontrol(daemon_dir, control_char):
         if e.errno != 6:
             raise
         return False
+
+
+def supervise(daemon_dir):
+    """
+    Starts a supervise subprocess for the given directory.
+    """
+    subprocess.Popen(['supervise', daemon_dir])
