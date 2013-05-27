@@ -15,49 +15,103 @@ body {
 }
 
 #daemon-overview {
-  padding: 9px;
+  margin-top: 30px;
 
-  div {
-    height: 36px;
-    margin-bottom: 9px;
-    border-radius: 18px;
-    cursor: pointer;
+  #daemons-list {
+    padding: 9px;
 
     div {
+      height: 32px;
+      margin-bottom: 9px;
+      border-radius: 18px;
+      cursor: pointer;
+
+      div {
+        display: inline-block;
+        line-height: 32px;
+      }
+
+      .daemon-name {
+        margin-left: 10px;
+        font-weight: bold;
+      }
+
+      .daemon-status {
+        margin-left: 15px;
+      }
+
+      .daemon-actions {
+        float: right;
+        margin-right: 4px;
+      }
+    }
+
+    .supervise_not_running {
+      background-color: rgba(159, 159, 159, 0.49);
+    }
+
+    .daemon_not_running {
+      background-color: rgba(196, 60, 53, 0.85);
+    }
+
+    .daemon_starting {
+      background-color: rgba(248, 148, 6, 0.75);
+    }
+
+    .daemon_running {
+      background-color: rgba(0, 188, 0, 0.85);
+    }
+  }
+
+  header {
+    position:  fixed;
+    z-index: 999;
+    width:  100%;
+    top:  0px;
+    background: black;
+    font-size: 0.8em;
+    line-height: 30px;
+
+    #error-panel {
       display: inline-block;
-      line-height: 36px;
-    }
-
-    .daemon-name {
-      margin-left: 10px;
       font-weight: bold;
+      color: #cd0a0a;
+      padding-left: 10px;
+      font-size: 1.1em;
     }
 
-    .daemon-status {
-      margin-left: 15px;
-    }
-
-    .daemon-actions {
+    #refresh-control {
       float: right;
-      margin-right: 10px;
+
+      label {
+        color: #eeeeee;
+        padding-right: 12px;
+      }
+
+      #refresh-slider {
+        display: inline-block;
+        width: 100px;
+        height: 5px;
+        margin-right: 12px;
+        a {
+          width: 12px;
+          height: 12px;
+        }
+      }
+
+      #refresh-spinner {
+        display: inline-block;
+        margin-right: 12px;
+        height:  14px;
+
+      }
     }
   }
+}
 
-  .supervise_not_running {
-    background-color: rgba(196, 60, 53, 0.50);
-  }
-
-  .daemon_not_running {
-    background-color: rgba(196, 60, 53, 0.85);
-  }
-
-  .daemon_starting {
-    background-color: rgba(248, 148, 6, 0.75);
-  }
-
-  .daemon_running {
-    background-color: rgba(0, 188, 0, 0.85);
-  }
+#daemon-single-view {
+  display: none;
+  background: #68a54b;
 }
 
 @mixin button-scaffold($color1, $color2, $color3, $color4) {

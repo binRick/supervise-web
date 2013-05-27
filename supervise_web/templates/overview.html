@@ -5,10 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
     <link href="{{ url_for('static', filename='css/supervise-web.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/jquery-ui.css') }}" rel="stylesheet">
     <script src="{{ url_for('static', filename='js/jquery-1.9.1.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/jquery-ui.js') }}"></script>
     <script src="{{ url_for('static', filename='js/supervise-web.js') }}"></script>
 </head>
 <body>
-<div id="daemon-overview"></div>
+<div id="daemon-overview">
+    <div id="daemons-list"></div>
+    <header>
+        <div id="error-panel"></div>
+        <div id="refresh-control">
+            <label for="refresh-slider"></label>
+            <div id="refresh-slider"></div>
+            <div id="refresh-spinner"><img src="static/img/spinner.gif" /></div>
+        </div>
+    </header>
+</div>
+<div id="daemon-single-view">
+    <div>
+        some test content
+    </div>
+</div>
+<div id="dialog-widget"></div>
 </body>
 </html>

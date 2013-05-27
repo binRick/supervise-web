@@ -1,4 +1,4 @@
 *.pyc
 /.idea
 /tmp
-/supervise_web/static/css/supervise-web.css
+/supervise_web/static/css/*.css
