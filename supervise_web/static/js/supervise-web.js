@@ -1,6 +1,6 @@
 function refreshDaemonList(synchronous) {
     $.ajax({
-        url: '/_daemons.html',
+        url: '/_daemons',
         async: synchronous != true,
         cache: false,
         success: function (data) {
@@ -25,10 +25,8 @@ function startRefreshing() {
         sliderLabel.text('refreshing every ' + interval + ' seconds');
     }
 
-    if ('intervalId' in startRefreshing) {
-        stopRefreshing();
-        if (interval == 0) return;
-    }
+    if ('intervalId' in startRefreshing) stopRefreshing();
+    if (interval == 0) return;
     startRefreshing.intervalId = window.setInterval(refreshDaemonList, interval * 1000);
     $('#refresh-spinner').css('visibility', 'visible');
 }
@@ -108,15 +106,40 @@ $(document).on('ready', function () {
     $("#refresh-slider").slider({
         min: 0,
         max: 5,
-        value: 1,
+        value: 3,
         change: startRefreshing
     });
 
-    $(document).on('click', 'div[data-daemon-id]', function (event) {
+    $(document).on('click', '#daemons-list div[data-daemon-id]', function (event) {
         if ($(event.target).is('button')) return;
         stopRefreshing();
-        $('div#daemon-overview').fadeOut(100, function () {
-            $('div#daemon-single-view').fadeIn(100);
+        var daemonId = $(event.target).attr('data-daemon-id');
+        if (daemonId === undefined)
+            daemonId = $(event.target).parents('div[data-daemon-id]').attr('data-daemon-id');
+        $('#daemon-single-view').load('/daemon/' + daemonId + '/_details', function() {
+            $('#daemon-overview').fadeOut(100, function () {
+                $('#daemon-single-view').fadeIn(100);
+            });
+        });
+    });
+
+    $(document).on('click', '.link-back', function (event) {
+        $('#daemon-single-view').fadeOut(100, function () {
+            $('#daemon-overview').fadeIn(100);
+            startRefreshing();
+        });
+    });
+
+    $(document).on('change', 'input#autostart', function (event) {
+        var checkbox = $(event.target);
+        var daemonId = checkbox.parents('.daemon-details').attr('data-daemon-id');
+        var url = '/daemon/' + daemonId + '/';
+        url += checkbox.is(':checked') ? 'autostart' : 'no_autostart';
+        checkbox.hide();
+        $('.autostart img').show();
+        $.post(url, function () {
+            checkbox.show();
+            $('.autostart img').hide();
         });
     });
 

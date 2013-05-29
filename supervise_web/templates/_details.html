@@ -1,0 +1,17 @@
+<div class="daemon-details" data-daemon-id="{{ daemon_id }}">
+    <header>
+        <div class="title">{{daemon_id}}</div>
+        <div class="link-back">Back</div>
+        <div class="autostart">
+            <input type="checkbox" id="autostart" {{ 'checked="checked"' if autostart else ''}}/>
+            <img src="static/img/spinner_small.gif" />
+            <div class="label">autostart</div>
+        </div>
+    </header>
+    <div class="content">
+        <textarea>{{ run }}</textarea>
+        <br /> <br /> <br /> <br /> <br /> <br /> placeholder <br /> <br /> <br /> sdfafd <br />
+    </div>
+    <footer>&nbsp;
+    </footer>
+</div>

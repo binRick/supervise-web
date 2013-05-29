@@ -1,3 +1,5 @@
+$font_color: #dddddd;
+
 body {
   padding: 0;
   margin: 0;
@@ -84,7 +86,7 @@ body {
       float: right;
 
       label {
-        color: #eeeeee;
+        color: $font_color;
         padding-right: 12px;
       }
 
@@ -111,7 +113,71 @@ body {
 
 #daemon-single-view {
   display: none;
-  background: #68a54b;
+
+  .daemon-details {
+    border-radius: 18px;
+    background: rgba(199, 199, 199, 0.67);
+    margin:  15px;
+
+    header {
+      width: 100%;
+      .title {
+        padding: 10px;
+        display: inline-block;
+        font-size: 1.1em;
+        font-weight: bold;
+        margin-left: 10px;
+      }
+
+      .link-back, .autostart {
+        float: right;
+        background-color: #272727;
+        color: $font_color;
+        height: 22px;
+        width: 90px;
+        text-align: center;
+      }
+
+      .link-back {
+        padding: 5px;
+        border-top-right-radius: 18px;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      .autostart {
+        padding: 5px;
+        border-right-style: solid;
+        border-right-width: 1px;
+        border-right-color:  $font_color;
+        border-bottom-left-radius: 3px;
+
+        img {
+          display: none;
+          margin-right: 8px;
+        }
+
+        .label {
+          vertical-align: top;
+          display: inline-block;
+        }
+      }
+    }
+
+    .content {
+      padding: 9px;
+
+      textarea {
+        width: 90%;
+        height: 300px;
+        background-color: rgba(136, 136, 51, 0.27);
+      }
+    }
+
+    footer {
+      width: 100%;
+    }
+  }
 }
 
 @mixin button-scaffold($color1, $color2, $color3, $color4) {
@@ -129,9 +195,8 @@ body {
   border-radius:26px;
   border:1px solid $color4;
   display:inline-block;
-  color:#ffffff;
-  font-size:13px;
-  font-weight:bold;
+  color: $font_color;
+  font-size: 1em;
   padding:3px 20px;
   text-decoration:none;
 
@@ -151,9 +216,9 @@ body {
 }
 
 .btn-stop, .btn-stop-supervise {
-  @include button-scaffold(#AD4738, #A53029, #cc736c, #6e1c18);
+  @include button-scaffold(#732820, #551715, #87514d, #501210);
 }
 
 .btn-start, .btn-start-supervise  {
-  @include button-scaffold(#74ad5a, #68a54b, #9acc85, #3b6e22);
-}
+  @include button-scaffold(#4f7338, #385524, #68875e, #215017);
+  }
