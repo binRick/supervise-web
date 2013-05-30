@@ -9,8 +9,10 @@
         </div>
     </header>
     <div class="content">
-        <textarea>{{ run }}</textarea>
-        <br /> <br /> <br /> <br /> <br /> <br /> placeholder <br /> <br /> <br /> sdfafd <br />
+        <label for="run_file">run file</label>
+        <textarea id="run_file">{{ run_file_content }}</textarea>
+        <label for="log_file">log file [tail]</label>
+        <textarea id="log_file">{{ log_tail }}</textarea>
     </div>
     <footer>&nbsp;
     </footer>

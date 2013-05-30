@@ -1,13 +1,13 @@
 import os
 from supervise_web.io import svstat, svcontrol, supervise
 
-SERVICE_DIR = '/etc/service'
+config = None
 
 
 def daemon_info():
     info = {}
-    for dir_name in os.listdir(SERVICE_DIR):
-        dir_path = os.path.join(SERVICE_DIR, dir_name)
+    for dir_name in os.listdir(service_dir()):
+        dir_path = os.path.join(service_dir(), dir_name)
         if not os.path.isdir(dir_path):
             continue
         info[dir_name] = svstat(dir_path)
@@ -19,7 +19,7 @@ def log_tail(dir_name, num_lines=100):
 
 
 def run_file(dir_name, content=None):
-    runfile = os.path.join(SERVICE_DIR, dir_name, 'run')
+    runfile = os.path.join(service_dir(), dir_name, 'run')
     if content is None:
         if not os.path.isfile(runfile):
             return ''
@@ -31,7 +31,7 @@ def run_file(dir_name, content=None):
 
 
 def daemon_autostart(dir_name, enabled=None):
-    down_file = os.path.join(SERVICE_DIR, dir_name, 'down')
+    down_file = os.path.join(service_dir(), dir_name, 'down')
     if enabled is True:
         if daemon_autostart(dir_name):
             return
@@ -45,16 +45,20 @@ def daemon_autostart(dir_name, enabled=None):
 
 
 def start_daemon(dir_name):
-    return svcontrol(os.path.join(SERVICE_DIR, dir_name), 'u')
+    return svcontrol(os.path.join(service_dir(), dir_name), 'u')
 
 
 def stop_daemon(dir_name):
-    return svcontrol(os.path.join(SERVICE_DIR, dir_name), 'd')
+    return svcontrol(os.path.join(service_dir(), dir_name), 'd')
 
 
 def start_supervise(dir_name):
-    supervise(os.path.join(SERVICE_DIR, dir_name))
+    supervise(os.path.join(service_dir(), dir_name))
 
 
 def stop_supervise(dir_name):
-    svcontrol(os.path.join(SERVICE_DIR, dir_name), 'x')
+    svcontrol(os.path.join(service_dir(), dir_name), 'x')
+
+
+def service_dir():
+    return config.get('Main', 'service_dir')

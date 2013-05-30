@@ -1,7 +1,16 @@
 from supervise_web import core
-from flask import Flask, render_template, abort, Response
+from functools import wraps
+from flask import Flask, render_template, abort, Response, request
 
 app = Flask(__name__)
+
+
+@app.before_request
+def before_request():
+    auth = request.authorization
+    if not auth or not (core.config.get('Main', 'auth_username') == auth.username
+                        and core.config.get('Main', 'auth_password') == auth.password):
+        return Response('You need to be authenticated', 401, {'WWW-Authenticate': 'Basic realm="Login Required"'})
 
 
 @app.route('/')
@@ -18,7 +27,8 @@ def _daemons():
 def _details(daemon_id):
     return render_template('_details.html',
                            daemon_id=daemon_id,
-                           run=core.run_file(daemon_id),
+                           run_file_content=core.run_file(daemon_id),
+                           log_tail='to be implemented',
                            autostart=core.daemon_autostart(daemon_id))
 
 

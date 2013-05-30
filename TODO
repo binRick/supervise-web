@@ -1,8 +1,7 @@
 * PIDs of daemon and its supervise process
 * memory consumption, CPU load
 * show log file
-* authentication
 * crud for run file
 * use pygments for syntax highlightning
 * save button appears at the top right still inside of the textarea after user changes run file
-* put config in own file
+* write a Readme.md file
