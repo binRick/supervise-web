@@ -78,6 +78,25 @@ function onDaemonRowClicked (event) {
     if (daemonId === undefined)
         daemonId = $(event.target).parents('div[data-daemon-id]').attr('data-daemon-id');
     $('#daemon-single-view').load('/daemon/' + daemonId + '/_details', function() {
+        names = ['run_file', 'run_user_file', 'log_file', 'log_file2']
+        for (var i in names) {
+            var editor = ace.edit(names[i]);
+            editor.setTheme('ace/theme/monokai');
+            editor.getSession().setMode('ace/mode/sh');
+            editor.setShowPrintMargin(false);
+            editor.getSession().on('change', function(event) {
+                $('#file_tabs div.active').data('modified', true);
+                $('#savebutton').show();
+            });
+            editor.commands.addCommand({
+                name: 'save',
+                bindKey: {win: 'Ctrl-S',  mac: 'Command-S'},
+                exec: onSaveButtonClicked,
+                readOnly: true
+            });
+        }
+        $('#run_file').show();
+        $('#run_file_tab').addClass('active');
         $('#daemon-overview').fadeOut(100, function () {
             $('#daemon-single-view').fadeIn(100);
         });
@@ -104,30 +123,19 @@ function onAutostartCheckboxClicked (event) {
     });
 }
 
-function onRunFileTabClicked (targetTextarea) {
-    $('#tab_content').children().hide();
-    targetTextarea.show();
-    if (targetTextarea.data('modified')) {
-        $('#savebutton').show();
-    } else {
-        $('#savebutton').hide();
-    }
-}
-
-function onLogFileTabClicked (targetTextarea) {
-    $('#tab_content').children().hide();
-    $('#savebutton').hide();
-    targetTextarea.show();
-}
-
 function onSaveButtonClicked () {
     var daemonId = $('#daemon-details').attr('data-daemon-id');
-    var textarea = $('#tab_content textarea:visible');
-    var data = {'content': textarea.val()};
-    if (textarea.is($('#run_file'))) {
+    var file_editor = $('#tab_content div:visible');
+    var editor_tab = null;
+    var data = {};
+    if (file_editor.is($('#run_file'))) {
+        editor_tab = $('#run_file_tab');
         data['filename'] = 'run';
-    } else if (textarea.is($('#run_user_file'))) {
+        data['content'] = ace.edit('run_file').getSession().getValue();
+    } else if (file_editor.is($('#run_user_file'))) {
+        editor_tab = $('#run_user_file_tab');
         data['filename'] = 'run-user';
+        data['content'] = ace.edit('run_user_file').getSession().getValue();
     }
 
     $.ajax({
@@ -135,7 +143,7 @@ function onSaveButtonClicked () {
         url: '/daemon/' + daemonId + '/save_file',
         data: data,
         success: function () {
-            textarea.removeData('modified');
+            editor_tab.removeData('modified');
             $('#savebutton').hide();
         },
         error: function (jqXHR) {
@@ -151,6 +159,46 @@ function onSaveButtonClicked () {
             });
         }
     });
+}
+
+function onRunFileTabClicked() {
+    $('#tab_content').children().hide();
+    $('#run_file').show();
+    $('#file_tabs > div').removeClass('active');
+    $('#run_file_tab').addClass('active');
+    if ($('#run_file_tab').data('modified')) {
+        $('#savebutton').show();
+    } else {
+        $('#savebutton').hide();
+    }
+}
+
+function onRunUserFileTabClicked() {
+    $('#tab_content').children().hide();
+    $('#run_user_file').show();
+    $('#file_tabs > div').removeClass('active');
+    $('#run_user_file_tab').addClass('active');
+    if ($('#run_user_file_tab').data('modified')) {
+        $('#savebutton').show();
+    } else {
+        $('#savebutton').hide();
+    }
+}
+
+function onLogFileTabClicked() {
+    $('#tab_content').children().hide();
+    $('#log_file').show();
+    $('#file_tabs > div').removeClass('active');
+    $('#log_file_tab').addClass('active');
+    $('#savebutton').hide();
+}
+
+function onLogFile2TabClicked() {
+    $('#tab_content').children().hide();
+    $('#log_file2').show();
+    $('#file_tabs > div').removeClass('active');
+    $('#log_file2_tab').addClass('active');
+    $('#savebutton').hide();
 }
 
 $(document).on('ready', function () {
@@ -195,33 +243,10 @@ $(document).on('ready', function () {
     $(document).on('click', '#daemons-list div[data-daemon-id]', onDaemonRowClicked);
     $(document).on('click', '.link-back', onBackLinkClicked);
     $(document).on('change', 'input#autostart', onAutostartCheckboxClicked);
-
-    $(document).on('click', '#run_file_tab', function () {
-        onRunFileTabClicked($('#run_file'));
-    });
-    $(document).on('click', '#run_user_file_tab', function () {
-        onRunFileTabClicked($('#run_user_file'));
-    });
-    $(document).on('click', '#log_file_tab', function () {
-        onLogFileTabClicked($('#log_file'));
-    });
-    $(document).on('click', '#log_file2_tab', function () {
-        onLogFileTabClicked($('#log_file2'));
-    });
-
-    $(document).keydown(function(event) {
-        if (String.fromCharCode(event.which).toLowerCase() == 's' && event.ctrlKey || event.which == 19) {
-            event.preventDefault();
-            onSaveButtonClicked();
-        }
-    });
-
-    $(document).on('keypress', '#tab_content textarea', function (event) {
-        $(event.target).data('modified', true);
-        $('#savebutton').show();
-        console.log(event.ctrlKey + ' ' + event.keyCode + ' ' + 's'.charCodeAt(0));
-    });
-
+    $(document).on('click', '#run_file_tab', onRunFileTabClicked);
+    $(document).on('click', '#run_user_file_tab', onRunUserFileTabClicked);
+    $(document).on('click', '#log_file_tab', onLogFileTabClicked);
+    $(document).on('click', '#log_file2_tab', onLogFile2TabClicked);
     $(document).on('click', '#savebutton', onSaveButtonClicked);
 
     startRefreshing();

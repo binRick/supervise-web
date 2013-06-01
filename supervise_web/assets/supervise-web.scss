@@ -188,27 +188,24 @@ textarea {
       padding: 9px;
       display:  inline-block;
       line-height: 15px;
-      width:  1000px;
+      width:  98%;
 
       div#file_tabs {
         div {
           display: inline-block;
           cursor: pointer;
           width:  90px;
-          padding: 5px 10px 0px 10px;
+          padding: 5px 10px 5px 10px;
           border-top-left-radius: 8px;
           border-top-right-radius: 8px;
           margin-right: 5px;
+          background-color: #272822;
+          font-family: monospace;
+          color: #777777;
         }
 
-        div#run_file_tab, div#run_user_file_tab {
-          background-color: rgba(136, 136, 51, 0.78);
-          font-family: monospace;
-        }
-
-        div#log_file_tab, div#log_file2_tab {
-          background-color: rgba(62, 136, 71, 0.77);
-          font-family: monospace;
+        .active {
+          color: $font_color;
         }
 
         div#savebutton {
@@ -217,34 +214,22 @@ textarea {
           width: 40px;
           text-align: center;
           margin-right: 0px;
+          color:  $font_color;
           background-color: rgba(103, 3, 0, 0.27);
         }
       }
 
       div#tab_content {
 
-        textarea {
+        #run_file, #run_user_file, #log_file, #log_file2 {
+          height: 600px;
           display: none;
-          width:  98%;
-          padding:  10px;
-          height: 300px;
-          font-size: .8em;
-          border-top-style: solid;
-          border-top-color: #575757;
-        }
 
-        textarea#run_file, textarea#run_user_file {
-          background-color: rgba(136, 136, 51, 0.27);
+          .ace_content {
+            font-family: monospace;
+          }
         }
-
-        textarea#run_file {
-          display: inline-block;
         }
-
-        textarea#log_file, textarea#log_file2 {
-          background-color: rgba(62, 136, 71, 0.26);
-        }
-      }
     }
 
     footer {
