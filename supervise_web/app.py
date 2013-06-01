@@ -28,27 +28,36 @@ def _details(daemon_id):
     return render_template('_details.html',
                            daemon_id=daemon_id,
                            run_file_content=core.run_file(daemon_id),
-                           log_tail='to be implemented',
+                           run_user_file_content=core.run_file(daemon_id, run_user=True),
+                           log_tail=core.log_tail(daemon_id, 1000),
                            autostart=core.daemon_autostart(daemon_id))
 
 
 @app.route('/daemon/<daemon_id>/<action>', methods=['POST'])
 def daemon_action(daemon_id, action):
     if action == 'start':
-        return Response(status=204) if core.start_daemon(daemon_id) else Response(status=500)
+        if not core.start_daemon(daemon_id):
+            return Response(status=500)
     elif action == 'stop':
-        return Response(status=204) if core.stop_daemon(daemon_id) else Response(status=500)
+        if not core.stop_daemon(daemon_id):
+            return Response(status=500)
     elif action == 'start_supervise':
         core.start_supervise(daemon_id)
-        return Response(status=204)
     elif action == 'stop_supervise':
         core.stop_supervise(daemon_id)
-        return Response(status=204)
     elif action == 'autostart':
         core.daemon_autostart(daemon_id, enabled=True)
-        return Response(status=204)
     elif action == 'no_autostart':
         core.daemon_autostart(daemon_id, enabled=False)
-        return Response(status=204)
+    elif action == 'save_file':
+        filename = request.form['filename']
+        content = request.form['content']
+        if filename == 'run':
+            core.run_file(daemon_id, content)
+        elif filename == 'run-user':
+            core.run_file(daemon_id, content, run_user=True)
+        else:
+            abort(405)
     else:
-        abort(400)
+        abort(405)
+    return Response(status=204)

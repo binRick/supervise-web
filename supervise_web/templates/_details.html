@@ -1,4 +1,4 @@
-<div class="daemon-details" data-daemon-id="{{ daemon_id }}">
+<div id="daemon-details" data-daemon-id="{{ daemon_id }}">
     <header>
         <div class="title">{{daemon_id}}</div>
         <div class="link-back">Back</div>
@@ -9,10 +9,19 @@
         </div>
     </header>
     <div class="content">
-        <label for="run_file">run file</label>
-        <textarea id="run_file">{{ run_file_content }}</textarea>
-        <label for="log_file">log file [tail]</label>
-        <textarea id="log_file">{{ log_tail }}</textarea>
+        <div id="file_tabs">
+            <div id="run_file_tab">run</div>
+            <div id="run_user_file_tab">run-user</div>
+            <div id="log_file_tab">log file 1</div>
+            <div id="log_file2_tab">log file 2</div>
+            <div id="savebutton">save</div>
+        </div>
+        <div id="tab_content">
+            <textarea id="run_file">{{ run_file_content }}</textarea>
+            <textarea id="run_user_file">{{ run_user_file_content }}</textarea>
+            <textarea id="log_file">to be implemented 1</textarea>
+            <textarea id="log_file2">to be implemented 2</textarea>
+        </div>
     </div>
     <footer>&nbsp;
     </footer>

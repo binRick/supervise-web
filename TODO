@@ -1,7 +1,15 @@
 * PIDs of daemon and its supervise process
 * memory consumption, CPU load
-* show log file
-* crud for run file
 * use pygments for syntax highlightning
-* save button appears at the top right still inside of the textarea after user changes run file
 * write a Readme.md file
+* test deploy - currently does not work that smoothly
+* write setup.py file
+* .supervise_web config file for each daemon and globally in the /etc/service directory
+
+* log files
+  - ability to clear log files
+  - ability to scroll without fetching the entire file to prevent overload (ajax fetch offset, limit)
+  - find log file locations by:
+    - check in .supervise_web.cfg file in folder (if exists)
+  - add edit config view to set log file location(s)
+  - how to clear a log file while another process writes to that file ?

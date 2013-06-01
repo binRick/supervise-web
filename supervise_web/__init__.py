@@ -16,5 +16,5 @@ if __name__ == "__main__":
     with open('supervise_web.cfg', 'r') as f:
         core.config.readfp(f)
 
-
-    app.run(host='0.0.0.0', debug=True)
+    port = core.config.getint('Main', 'port')
+    app.run(host='0.0.0.0', port=port, debug=True)

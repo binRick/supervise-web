@@ -18,16 +18,24 @@ def log_tail(dir_name, num_lines=100):
     raise NotImplementedError('to be implemented')
 
 
-def run_file(dir_name, content=None):
-    runfile = os.path.join(service_dir(), dir_name, 'run')
+def run_file(dir_name, content=None, run_user=False):
+    """
+    Read or write the supervise 'run' file in the service directory
+    If a content is given, write that content to the file, else read the file's content
+    If run_user is True, write to the 'run-user' file instead
+    """
+    filename = 'run-user' if run_user else 'run'
+    runfile = os.path.join(service_dir(), dir_name, filename)
     if content is None:
         if not os.path.isfile(runfile):
-            return ''
-        return open(runfile, 'r').read()
+            content = ''
+        else:
+            content = open(runfile, 'r').read()
     else:
         with open(runfile, 'w') as f:
             f.write(content)
         os.chmod(runfile, 0x1C0)  # -rwx------
+    return content
 
 
 def daemon_autostart(dir_name, enabled=None):
