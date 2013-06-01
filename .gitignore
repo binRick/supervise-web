@@ -2,3 +2,6 @@
 /.idea
 /tmp
 /supervise_web/static/css/*.css
+/build
+/dist
+/supervise_web.egg-info

@@ -1,9 +1,7 @@
 * PIDs of daemon and its supervise process
 * memory consumption, CPU load
-* use pygments for syntax highlightning
 * write a Readme.md file
 * test deploy - currently does not work that smoothly
-* write setup.py file
 * .supervise_web config file for each daemon and globally in the /etc/service directory
 
 * log files
