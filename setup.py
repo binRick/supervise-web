@@ -14,7 +14,7 @@ setup(
      packages=find_packages(exclude=['tests']),
      package_data={'': [
          'static/img/*',
-         'static/js/*',
+         'static/js/*.js',
          'static/css/*.css',
          'static/css/fonts/*',
          'static/css/images/*',

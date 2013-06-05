@@ -1,6 +1,6 @@
+import os
 from supervise_web import core
-from functools import wraps
-from flask import Flask, render_template, abort, Response, request
+from flask import Flask, render_template, abort, Response, request, jsonify
 
 app = Flask(__name__)
 
@@ -29,35 +29,68 @@ def _details(daemon_id):
                            daemon_id=daemon_id,
                            run_file_content=core.run_file(daemon_id),
                            run_user_file_content=core.run_file(daemon_id, run_user=True),
-                           log_tail=core.log_tail(daemon_id, 1000),
                            autostart=core.daemon_autostart(daemon_id))
 
 
-@app.route('/daemon/<daemon_id>/<action>', methods=['POST'])
-def daemon_action(daemon_id, action):
-    if action == 'start':
-        if not core.start_daemon(daemon_id):
-            return Response(status=500)
-    elif action == 'stop':
-        if not core.stop_daemon(daemon_id):
-            return Response(status=500)
-    elif action == 'start_supervise':
-        core.start_supervise(daemon_id)
-    elif action == 'stop_supervise':
-        core.stop_supervise(daemon_id)
-    elif action == 'autostart':
-        core.daemon_autostart(daemon_id, enabled=True)
-    elif action == 'no_autostart':
-        core.daemon_autostart(daemon_id, enabled=False)
-    elif action == 'save_file':
-        filename = request.form['filename']
-        content = request.form['content']
-        if filename == 'run':
-            core.run_file(daemon_id, content)
-        elif filename == 'run-user':
-            core.run_file(daemon_id, content, run_user=True)
-        else:
-            abort(405)
+@app.route('/daemon/<daemon_id>/start', methods=['POST'])
+def daemon_action_start(daemon_id):
+    if not core.start_daemon(daemon_id):
+        return Response(status=500)
+    return Response(status=204)
+
+
+@app.route('/daemon/<daemon_id>/stop', methods=['POST'])
+def daemon_action_stop(daemon_id):
+    if not core.stop_daemon(daemon_id):
+        return Response(status=500)
+    return Response(status=204)
+
+
+@app.route('/daemon/<daemon_id>/start_supervise', methods=['POST'])
+def daemon_action_start_supervise(daemon_id):
+    core.start_supervise(daemon_id)
+    return Response(status=204)
+
+
+@app.route('/daemon/<daemon_id>/stop_supervise', methods=['POST'])
+def daemon_action_stop_supervise(daemon_id):
+    core.stop_supervise(daemon_id)
+    return Response(status=204)
+
+
+@app.route('/daemon/<daemon_id>/autostart', methods=['POST'])
+def daemon_action_autostart(daemon_id):
+    core.daemon_autostart(daemon_id, enabled=True)
+    return Response(status=204)
+
+
+@app.route('/daemon/<daemon_id>/no_autostart', methods=['POST'])
+def daemon_action_no_autostart(daemon_id):
+    core.daemon_autostart(daemon_id, enabled=False)
+    return Response(status=204)
+
+
+@app.route('/daemon/<daemon_id>/save_file', methods=['POST'])
+def daemon_action_save_file(daemon_id):
+    filename = request.form['filename']
+    content = request.form['content']
+    if filename == 'run':
+        core.run_file(daemon_id, content)
+    elif filename == 'run-user':
+        core.run_file(daemon_id, content, run_user=True)
     else:
         abort(405)
     return Response(status=204)
+
+
+@app.route('/daemon/<daemon_id>/log_file_locations', methods=['GET', 'POST'])
+def daemon_action_log_file_locations(daemon_id):
+    log_names = ['run_log', 'daemon_log']
+    if request.method == 'GET':
+        log_locations = core.log_file_locations(daemon_id, *log_names)
+        data = {log_names[i]: log_locations[i] for i in range(len(log_locations))}
+        return jsonify(data)
+    else:
+        kwargs = {n: request.form[n] for n in log_names}
+        core.set_log_file_locations(daemon_id, **kwargs)
+        return Response(status=204)

@@ -1,7 +1,8 @@
 <div id="daemon-details" data-daemon-id="{{ daemon_id }}">
     <header>
         <div class="title">{{daemon_id}}</div>
-        <div class="link-back">Back</div>
+        <div id="link-back">back</div>
+        <div id="log_config">log-config</div>
         <div class="autostart">
             <input type="checkbox" id="autostart" {{ 'checked="checked"' if autostart else ''}}/>
             <img src="static/img/spinner_small.gif" />
@@ -10,17 +11,17 @@
     </header>
     <div class="content">
         <div id="file_tabs">
-            <div id="run_file_tab">run</div>
-            <div id="run_user_file_tab">run-user</div>
-            <div id="log_file_tab">log file 1</div>
-            <div id="log_file2_tab">log file 2</div>
+            <div id="run_file_tab" title="The script that gets executed by supervise to start the daemon">run</div>
+            <div id="run_user_file_tab" title="Might be used to run the daemon as a non-root user. The run script needs to exec this script.">run-user</div>
+            <div id="log_file_tab" title="The file which the output of the run script is written to">run log</div>
+            <div id="log_file2_tab" title="The log file of the daemon that's started by the run file">daemon log</div>
             <div id="savebutton">save</div>
         </div>
         <div id="tab_content">
             <div id="run_file">{{ run_file_content }}</div>
             <div id="run_user_file">{{ run_user_file_content }}</div>
-            <div id="log_file">to be implemented 1</div>
-            <div id="log_file2">to be implemented 2</div>
+            <div id="log_file"></div>
+            <div id="log_file2"></div>
         </div>
     </div>
     <footer>&nbsp;
