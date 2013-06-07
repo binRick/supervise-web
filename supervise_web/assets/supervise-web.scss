@@ -227,10 +227,15 @@ textarea {
       }
 
       div#tab_content {
+        position:  relative;
+        height: 600px;
 
         #run_file, #run_user_file, #log_file, #log_file2 {
-          height: 600px;
-          display: none;
+          position: absolute;
+          left: 0px;
+          right: 0px;
+          top: 0px;
+          bottom: 0px;
 
           .ace_content {
             font-family: monospace;

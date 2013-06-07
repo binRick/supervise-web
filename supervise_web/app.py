@@ -1,4 +1,3 @@
-import os
 from supervise_web import core
 from flask import Flask, render_template, abort, Response, request, jsonify
 
@@ -29,6 +28,8 @@ def _details(daemon_id):
                            daemon_id=daemon_id,
                            run_file_content=core.run_file(daemon_id),
                            run_user_file_content=core.run_file(daemon_id, run_user=True),
+                           run_log_file=core.log_file_locations(daemon_id, 'run_log')[0],
+                           daemon_log_file=core.log_file_locations(daemon_id, 'daemon_log')[0],
                            autostart=core.daemon_autostart(daemon_id))
 
 
@@ -94,3 +95,8 @@ def daemon_action_log_file_locations(daemon_id):
         kwargs = {n: request.form[n] for n in log_names}
         core.set_log_file_locations(daemon_id, **kwargs)
         return Response(status=204)
+
+
+@app.route('/fetch_file', methods=['POST'])
+def fetch_file():
+    return core.fetch_log(request.form['file_path'])

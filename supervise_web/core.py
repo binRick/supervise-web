@@ -15,8 +15,14 @@ def daemon_info():
     return info
 
 
-def log_tail(dir_name, num_lines=100):
-    raise NotImplementedError('to be implemented')
+def fetch_log(log_file):
+    """
+    Try to find a log file definition in the run file
+    """
+    if not os.path.isfile(log_file):
+        return ''
+    with open(log_file, 'r') as f:
+        return f.read()
 
 
 def log_file_locations(dir_name, *args):

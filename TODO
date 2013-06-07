@@ -5,6 +5,4 @@
 
 * log files
   - ability to clear log files
-  - ability to scroll without fetching the entire file to prevent overload (ajax fetch offset, limit)
-  - add edit config view to set log file location(s)
   - how to clear a log file while another process writes to that file ?

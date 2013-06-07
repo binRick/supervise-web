@@ -20,8 +20,8 @@
         <div id="tab_content">
             <div id="run_file">{{ run_file_content }}</div>
             <div id="run_user_file">{{ run_user_file_content }}</div>
-            <div id="log_file"></div>
-            <div id="log_file2"></div>
+            <div id="log_file" {{ 'data-file=%s' % run_log_file if run_log_file else '' }}></div>
+            <div id="log_file2" {{ 'data-file=%s' % daemon_log_file if daemon_log_file else '' }}></div>
         </div>
     </div>
     <footer>&nbsp;

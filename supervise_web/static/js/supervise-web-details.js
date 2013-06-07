@@ -83,6 +83,20 @@ function onRunUserFileTabClicked() {
 }
 
 function onLogFileTabClicked() {
+    var file = $('#log_file').attr('data-file');
+    if (file) {
+        $.ajax({
+            url: '/fetch_file',
+            type: 'POST',
+            data: {file_path: file},
+            success: function (data) {
+                var editor = ace.edit('log_file');
+                editor.getSession().setValue(data);
+                editor.setReadOnly(true);
+                editor.navigateFileEnd();
+            }
+        });
+    }
     $('#tab_content').children().hide();
     $('#log_file').show();
     $('#file_tabs > div').removeClass('active');
@@ -91,6 +105,20 @@ function onLogFileTabClicked() {
 }
 
 function onLogFile2TabClicked() {
+    var file = $('#log_file2').attr('data-file');
+    if (file) {
+        $.ajax({
+            url: '/fetch_file',
+            type: 'POST',
+            data: {file_path: file},
+            success: function (data) {
+                var editor = ace.edit('log_file2');
+                editor.getSession().setValue(data);
+                editor.setReadOnly(true);
+                editor.navigateFileEnd();
+            }
+        });
+    }
     $('#tab_content').children().hide();
     $('#log_file2').show();
     $('#file_tabs > div').removeClass('active');
@@ -125,15 +153,19 @@ function onLogConfigButtonClicked() {
         modal: true,
         buttons: {
             'Save': function () {
+                var runLogfile = $('#run_log_file_location').val();
+                var daemonLogfile = $('#daemon_log_file_location').val();
                 $.ajax({
                     url: '/daemon/' + daemonId + '/log_file_locations',
                     type: 'POST',
                     data: {
-                        run_log: $('#run_log_file_location').val(),
-                        daemon_log: $('#daemon_log_file_location').val()
+                        run_log: runLogfile,
+                        daemon_log: daemonLogfile
                     },
                     async: false,
                     success: function () {
+                        $('#log_file').attr('data-file', runLogfile);
+                        $('#log_file2').attr('data-file', daemonLogfile);
                         dialog.dialog('close');
                     }
                 });
@@ -171,7 +203,6 @@ function onDetailsViewLoaded() {
         editor.setShowPrintMargin(false);
     }
 
-    $('#run_file').show();
     $('#run_file_tab').addClass('active');
     $('#daemon-overview').fadeOut(100, function () {
         $('#daemon-single-view').fadeIn(100);
