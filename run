@@ -1,0 +1,5 @@
+#!/bin/bash
+# Run file for supervise_web
+
+source /path/to/your/virtualenv
+python -m supervise_web.main

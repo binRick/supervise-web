@@ -7,7 +7,7 @@ setup(
      version=check_output(['git', 'describe']).strip(),
      author='Michael Schier',
      author_email='schiermike@gmail.com',
-     description='A web interface for processed supervised with DJB daemontools.',
+     description='A web interface for processes supervised with DJB daemontools.',
      license='MIT',
      keywords='supervise svc daemontools',
      url='https://github.com/schiermike/supervise-web',
@@ -21,6 +21,9 @@ setup(
          'templates/*',
          'assets/*'
      ]},
+     data_files=[
+         ('', ['LICENSE.txt'])
+     ],
      install_requires=[
          'Flask>=0.9',
          'Flask-Scss>=0.3',

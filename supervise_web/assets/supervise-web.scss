@@ -134,7 +134,8 @@ textarea {
   display: none;
 
   #daemon-details {
-    border-radius: 18px;
+    border-top-left-radius: 18px;
+    border-top-right-radius: 18px;
     background: rgba(199, 199, 199, 0.67);
     margin:  15px;
 
@@ -193,9 +194,7 @@ textarea {
 
     .content {
       padding: 9px;
-      display:  inline-block;
       line-height: 15px;
-      width:  98%;
 
       div#file_tabs {
         div {

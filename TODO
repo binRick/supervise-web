@@ -1,8 +1,2 @@
 * PIDs of daemon and its supervise process
 * memory consumption, CPU load
-* write a Readme.md file
-* test deploy - currently does not work that smoothly
-
-* log files
-  - ability to clear log files
-  - how to clear a log file while another process writes to that file ?

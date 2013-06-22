@@ -4,6 +4,8 @@ import signal
 import shutil
 import textwrap
 import time
+import supervise_web.core
+from mock import Mock
 from subprocess import Popen, PIPE
 from supervise_web.io import svstat
 
@@ -12,6 +14,7 @@ class BaseTestCase(TestCase):
     def setUp(self):
         # create an empty test directory
         self.test_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'tmp')
+        supervise_web.core._service_dir = Mock(return_value=self.test_dir)
         if os.path.exists(self.test_dir):
             shutil.rmtree(self.test_dir)
         os.mkdir(self.test_dir)

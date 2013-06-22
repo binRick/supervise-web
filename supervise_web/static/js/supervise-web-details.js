@@ -205,6 +205,7 @@ function onDetailsViewLoaded() {
 
     $('#run_file_tab').addClass('active');
     $('#daemon-overview').fadeOut(100, function () {
+        onRunFileTabClicked();
         $('#daemon-single-view').fadeIn(100);
     });
 }
