@@ -3,7 +3,7 @@ Supervise-Web
 
 Supervise-Web is a web frontend for [Daniel J. Bernstein's supervise tools](http://cr.yp.to/daemontools.html) `svc`,
 `svstat`, and `supervise` from the daemontools collection. It was created in an effort to facilitate monitoring the
-health and responsiveness of daemons, and to speed up the process of upgrading a set of daemons simulateously.
+health and responsiveness of daemons, and to speed up the process of upgrading a set of daemons simultaneously.
 
 It allows you to monitor all daemons that are deployed in a directory such as `/service` or `/etc/service` and are
 possibly managed by `svscan`. Moreover, you can ...
@@ -15,10 +15,13 @@ possibly managed by `svscan`. Moreover, you can ...
 * edit the `run` and `run-user` configuration files
 * control the monitoring-interval
 
-Supervise-Web is written in python and uses the flask microframework. All communication between Supervise-Web and
+Supervise-Web is written in python and uses the flask micro-framework. All communication between Supervise-Web and
 supervise processes is done directly via the supervise file queues - `svc` and `svstat` are not needed.
 
-Beware that Supervise-Web is by no means secure, so make sure that access to it is restricted before deployment.
+Beware that the default authentication mechanism of Supervise-Web is by no means secure, so make sure that access to
+it is restricted before deploying to an exposed production system.
+
+![Screenshot](http://temp.syncarus.net/supervise_web_screenshot.png)
 
 
 Installation
