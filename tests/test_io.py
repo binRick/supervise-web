@@ -1,5 +1,5 @@
 from tests import BaseTestCase
-from supervise_web.io import svstat, svcontrol
+from supervise_web.svio import svstat, svcontrol
 import datetime
 import os
 import time

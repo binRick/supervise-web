@@ -1,0 +1,6 @@
+include VERSION
+include LICENSE.txt
+prune tests
+recursive-include supervise_web/assets *
+recursive-include supervise_web/templates *
+recursive-include supervise_web/static *

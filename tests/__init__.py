@@ -7,7 +7,7 @@ import time
 import supervise_web.core
 from mock import Mock
 from subprocess import Popen, PIPE
-from supervise_web.io import svstat
+from supervise_web.svio import svstat
 
 
 class BaseTestCase(TestCase):

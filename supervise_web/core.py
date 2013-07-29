@@ -1,6 +1,6 @@
 import os
 import ConfigParser
-from supervise_web.io import svstat, svcontrol, supervise
+from supervise_web.svio import svstat, svcontrol, supervise
 
 config = None
 
